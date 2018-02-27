@@ -1,6 +1,7 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
 " plugins
+Plug 'Shougo/deoplete.nvim'
 Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -14,12 +15,14 @@ Plug 'ap/vim-css-color'
 Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'terryma/vim-expand-region'
 Plug 'neomake/neomake'
-Plug 'Shougo/deoplete.nvim'
 Plug 'tpope/vim-dispatch'
 Plug 'codeindulgence/vim-tig'
 Plug 'junegunn/goyo.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'craigemery/vim-autotag'
+Plug 'vim-scripts/ReplaceWithRegister'
+Plug 'kshenoy/vim-signature'
+Plug 'easymotion/vim-easymotion'
 
 " git stuff
 Plug 'tpope/vim-fugitive'
@@ -34,6 +37,7 @@ Plug 'kana/vim-textobj-function'
 Plug 'leafgarland/typescript-vim'
 Plug 'jceb/vim-orgmode'
 Plug 'tpope/vim-speeddating'
+Plug 'posva/vim-vue'
 
 " color schemes
 Plug 'rakr/vim-one'
@@ -63,6 +67,10 @@ set noswapfile
 " dont change cursor in insert mode - thank god
 set guicursor=
 language en_US
+
+" Open new split panes to right and bottom, which feels more natural than Vim’s default
+set splitbelow
+set splitright
 
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 "If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
@@ -120,11 +128,19 @@ let g:deoplete#enable_at_startup = 1
 " ctrlp ignore stuff
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
 
+" map leader to spacebar, \ is a pain to reach...
+let mapleader=" "
+nnoremap <SPACE> <Nop>
+
+" map save
+nnoremap <Leader>s :wa<CR>
+
 " emmet
 imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
 
 " keybinds
 noremap 0 ^
+vnoremap <C-c> "+y
 
 " expand region
 map K <Plug>(expand_region_expand)
@@ -153,10 +169,15 @@ nnoremap <leader>tl :Tig!<CR>
 nnoremap <leader>fc :Gcommit<CR>
 nnoremap <leader>fd :Gdiff<CR>
 nnoremap <leader>fb :Gblame<CR>
+nnoremap <leader>fo :Git checkout 
 
 " themes
 nnoremap <leader>bl :set background=light <CR>
 nnoremap <leader>bd :set background=dark<CR>
+
+" move lines
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
 
 " NERDcommenter
 let g:NERDSpaceDelims = 1
@@ -169,7 +190,7 @@ let delimitMate_expand_cr = 1
 let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 map <C-p> :Files<CR>
 map <C-e> :Buffers<CR>
-map <C-f> :Ag<CR>
+map <C-f> :Ag 
 
 command! -bang -nargs=* Ag
   \ call fzf#vim#ag(<q-args>,
