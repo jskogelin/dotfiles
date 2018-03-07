@@ -1,7 +1,7 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
 " plugins
-Plug 'Shougo/deoplete.nvim'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -31,6 +31,7 @@ Plug 'airblade/vim-gitgutter'
 
 " syntax stuff
 Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
 Plug 'lepture/vim-jinja'
 Plug 'thinca/vim-textobj-function-javascript'
 Plug 'kana/vim-textobj-function'
@@ -38,6 +39,7 @@ Plug 'leafgarland/typescript-vim'
 Plug 'jceb/vim-orgmode'
 Plug 'tpope/vim-speeddating'
 Plug 'posva/vim-vue'
+Plug 'nikvdp/ejs-syntax'
 
 " color schemes
 Plug 'rakr/vim-one'
@@ -190,7 +192,7 @@ let delimitMate_expand_cr = 1
 let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 map <C-p> :Files<CR>
 map <C-e> :Buffers<CR>
-map <C-f> :Ag 
+map <C-f> :Ag <C-r><C-w>
 
 command! -bang -nargs=* Ag
   \ call fzf#vim#ag(<q-args>,
@@ -202,3 +204,6 @@ command! -bang -nargs=* Ag
 " tig
 let g:tig_open_command = 'tabedit'
 let g:tig_on_exit = 'tabclose'
+
+" snippets
+ab cons console.log
