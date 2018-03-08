@@ -14,7 +14,6 @@ Plug 'mattn/emmet-vim'
 Plug 'ap/vim-css-color'
 Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'terryma/vim-expand-region'
-Plug 'neomake/neomake'
 Plug 'tpope/vim-dispatch'
 Plug 'codeindulgence/vim-tig'
 Plug 'junegunn/goyo.vim'
@@ -40,6 +39,7 @@ Plug 'jceb/vim-orgmode'
 Plug 'tpope/vim-speeddating'
 Plug 'posva/vim-vue'
 Plug 'nikvdp/ejs-syntax'
+Plug 'w0rp/ale'
 
 " color schemes
 Plug 'rakr/vim-one'
@@ -90,14 +90,6 @@ let g:nord_allow_italics = 1
 let g:nord_comment_brightness = 12
 set background=dark
 
-" neomake
-let g:neomake_javascript_jshint_maker = {
-    \ 'args': ['--verbose'],
-    \ 'errorformat': '%A%f: line %l\, col %v\, %m \(%t%*\d\)',
-    \ }
-let g:neomake_javascript_enabled_makers = ['eslint']
-autocmd! BufWritePost,BufEnter * Neomake
-
 " Hopefully fixes ack going bananas sometimes
 let g:ack_use_dispatch = 1
 
@@ -114,7 +106,8 @@ let g:lightline = {
       \ 'colorscheme': 'gruvbox',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \             [ 'readonly', 'filename' ] ],
+      \  'right': [ [ 'modified', 'gitbranch' ] ]
       \ },
       \ 'component_function': {
       \   'gitbranch': 'fugitive#head'
