@@ -46,6 +46,7 @@ Plug 'rakr/vim-one'
 Plug 'arcticicestudio/nord-vim'
 Plug 'rafi/awesome-vim-colorschemes'
 Plug 'challenger-deep-theme/vim'
+Plug 'drewtempelmeyer/palenight.vim'
 
 call plug#end()
 
@@ -55,6 +56,8 @@ set autoindent
 set smartindent
 set cindent
 set number
+set wrap
+set linebreak
 " set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:·
 " set list
 set tabstop=2
@@ -85,7 +88,8 @@ set termguicolors
 
 " color scheme setup
 syntax on
-colorscheme gruvbox
+colorscheme palenight
+let g:gruvbox_contrast_dark='soft'
 let g:nord_allow_italics = 1
 let g:nord_comment_brightness = 12
 set background=dark
@@ -103,7 +107,7 @@ autocmd InsertLeave * set nocul
 
 " lightline
 let g:lightline = {
-      \ 'colorscheme': 'gruvbox',
+      \ 'colorscheme': 'one',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'readonly', 'filename' ] ],
@@ -185,7 +189,7 @@ let delimitMate_expand_cr = 1
 let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 map <C-p> :Files<CR>
 map <C-e> :Buffers<CR>
-map <C-f> :Ag <C-r><C-w>
+map <C-f> :Ag 
 
 command! -bang -nargs=* Ag
   \ call fzf#vim#ag(<q-args>,
