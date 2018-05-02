@@ -1,11 +1,11 @@
 call plug#begin('~/.local/share/nvim/plugged')
-
+ 
 " plugins
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'itchyny/lightline.vim'
+" Plug 'itchyny/lightline.vim'
 Plug 'raimondi/delimitmate'
 Plug 'kana/vim-textobj-user'
 Plug 'scrooloose/nerdtree'
@@ -22,6 +22,8 @@ Plug 'craigemery/vim-autotag'
 Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'kshenoy/vim-signature'
 Plug 'easymotion/vim-easymotion'
+Plug 'wellle/targets.vim'
+Plug 'rakr/vim-togglebg'
 
 " git stuff
 Plug 'tpope/vim-fugitive'
@@ -40,15 +42,18 @@ Plug 'tpope/vim-speeddating'
 Plug 'posva/vim-vue'
 Plug 'nikvdp/ejs-syntax'
 Plug 'w0rp/ale'
+Plug 'rust-lang/rust.vim'
 
 " color schemes
-Plug 'rakr/vim-one'
-Plug 'arcticicestudio/nord-vim'
 Plug 'rafi/awesome-vim-colorschemes'
-Plug 'challenger-deep-theme/vim'
 Plug 'drewtempelmeyer/palenight.vim'
 
 call plug#end()
+
+" color scheme setup
+syntax on
+colorscheme palenight
+set background=dark
 
 " settings
 filetype plugin indent on
@@ -86,14 +91,6 @@ let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
 set termguicolors
 
-" color scheme setup
-syntax on
-colorscheme palenight
-let g:gruvbox_contrast_dark='soft'
-let g:nord_allow_italics = 1
-let g:nord_comment_brightness = 12
-set background=dark
-
 " Hopefully fixes ack going bananas sometimes
 let g:ack_use_dispatch = 1
 
@@ -106,17 +103,17 @@ autocmd InsertLeave * set nocul
 " let g:airline_powerline_fonts = 1
 
 " lightline
-let g:lightline = {
-      \ 'colorscheme': 'one',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'readonly', 'filename' ] ],
-      \  'right': [ [ 'modified', 'gitbranch' ] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'fugitive#head'
-      \ },
-      \ }
+" let g:lightline = {
+      " \ 'colorscheme': 'one',
+      " \ 'active': {
+      " \   'left': [ [ 'mode', 'paste' ],
+      " \             [ 'readonly', 'filename' ] ],
+      " \  'right': [ [ 'modified', 'gitbranch' ] ]
+      " \ },
+      " \ 'component_function': {
+      " \   'gitbranch': 'fugitive#head'
+      " \ },
+      " \ }
 
 " NerdTree setup
 let g:NERDTreeWinPos = "right"
@@ -128,8 +125,8 @@ let g:deoplete#enable_at_startup = 1
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
 
 " map leader to spacebar, \ is a pain to reach...
-let mapleader=" "
 nnoremap <SPACE> <Nop>
+let mapleader="\<Space>"
 
 " map save
 nnoremap <Leader>s :wa<CR>
@@ -164,6 +161,9 @@ vnoremap <S-Tab> <gv
 nnoremap <leader>ts :Tig<CR>
 nnoremap <leader>tl :Tig!<CR>
 
+" source config
+nnoremap <leader>r :source ~/.config/nvim/init.vim<CR>
+
 " fugitive
 nnoremap <leader>fc :Gcommit<CR>
 nnoremap <leader>fd :Gdiff<CR>
@@ -171,12 +171,16 @@ nnoremap <leader>fb :Gblame<CR>
 nnoremap <leader>fo :Git checkout 
 
 " themes
-nnoremap <leader>bl :set background=light <CR>
-nnoremap <leader>bd :set background=dark<CR>
+nnoremap <leader>bl :set background=light<CR> :colorscheme one<CR>
+nnoremap <leader>bd :set background=dark<CR> :colorscheme palenight<CR>
 
 " move lines
-vnoremap J :m '>+1<CR>gv=gv
-vnoremap K :m '<-2<CR>gv=gv
+vnoremap <C-j> :m '>+1<CR>gv=gv
+vnoremap <C-k> :m '<-2<CR>gv=gv
+
+" panes
+nnoremap L <C-W><C-L>
+nnoremap H <C-W><C-H>
 
 " NERDcommenter
 let g:NERDSpaceDelims = 1
@@ -204,3 +208,5 @@ let g:tig_on_exit = 'tabclose'
 
 " snippets
 ab cons console.log
+
+" call togglebg#map('<C-b><C-t>')

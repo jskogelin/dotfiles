@@ -5,7 +5,7 @@ export ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="kolo"
+ZSH_THEME="sunrise"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -98,8 +98,11 @@ alias ag='ag --path-to-ignore ~/.ignore'
 alias ctags="`brew --prefix`/bin/ctags"
 alias hs='http-server -o -c-1'
 
+export VISUAL=vim
+export EDITOR="$VISUAL"
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
 export PATH=$PATH:~/bin
+export PATH="$HOME/.cargo/bin:$PATH"
 export NVM_DIR="/usr/local/opt/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
