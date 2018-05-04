@@ -1,5 +1,5 @@
 call plug#begin('~/.local/share/nvim/plugged')
-
+ 
 " plugins
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'tpope/vim-surround'
@@ -22,7 +22,8 @@ Plug 'craigemery/vim-autotag'
 Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'kshenoy/vim-signature'
 Plug 'easymotion/vim-easymotion'
-Plug 'rakr/vim-togglebg'
+Plug 'wellle/targets.vim'
+" Plug 'rakr/vim-togglebg'
 
 " git stuff
 Plug 'tpope/vim-fugitive'
@@ -41,21 +42,16 @@ Plug 'tpope/vim-speeddating'
 Plug 'posva/vim-vue'
 Plug 'nikvdp/ejs-syntax'
 Plug 'w0rp/ale'
-Plug 'flowtype/vim-flow'
+Plug 'rust-lang/rust.vim'
 
 " color schemes
-Plug 'rakr/vim-one'
-Plug 'arcticicestudio/nord-vim'
 Plug 'rafi/awesome-vim-colorschemes'
-Plug 'flazz/vim-colorschemes'
-Plug 'challenger-deep-theme/vim'
-Plug 'drewtempelmeyer/palenight.vim'
 
 call plug#end()
 
 " color scheme setup
-colorscheme two-firewatch
 syntax on
+colo two-firewatch
 set background=dark
 
 " settings
@@ -128,8 +124,8 @@ let g:deoplete#enable_at_startup = 1
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
 
 " map leader to spacebar, \ is a pain to reach...
-let mapleader=" "
 nnoremap <SPACE> <Nop>
+let mapleader="\<Space>"
 
 " map save
 nnoremap <Leader>s :wa<CR>
@@ -208,4 +204,6 @@ let g:tig_on_exit = 'tabclose'
 " snippets
 ab cons console.log
 
-call togglebg#map('<Leader>bt')
+let g:rust_recommended_style = 0
+
+" call togglebg#map('<Leader>bt')

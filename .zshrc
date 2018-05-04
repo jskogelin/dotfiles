@@ -100,6 +100,7 @@ alias hs='http-server -o -c-1'
 
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
 export PATH=$PATH:~/bin
+export PATH="$HOME/.cargo/bin:$PATH"
 export NVM_DIR="/usr/local/opt/nvm"
 export SLACK_TOKEN='xoxp-3797808167-4004664827-141833846358-76d1cad33a589139fcf18c0e24f3906e'
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
