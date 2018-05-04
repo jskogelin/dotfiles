@@ -46,12 +46,13 @@ Plug 'rust-lang/rust.vim'
 
 " color schemes
 Plug 'rafi/awesome-vim-colorschemes'
+Plug 'drewtempelmeyer/palenight.vim'
 
 call plug#end()
 
 " color scheme setup
 syntax on
-colo two-firewatch
+colorscheme palenight
 set background=dark
 
 " settings
@@ -170,7 +171,7 @@ nnoremap <leader>fb :Gblame<CR>
 nnoremap <leader>fo :Git checkout 
 
 " themes
-nnoremap <leader>bl :set background=light <CR> :colorscheme two-firewatch
+nnoremap <leader>bl :set background=light<CR>
 nnoremap <leader>bd :set background=dark<CR>
 
 " move lines
