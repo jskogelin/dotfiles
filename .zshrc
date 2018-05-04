@@ -98,6 +98,8 @@ alias ag='ag --path-to-ignore ~/.ignore'
 alias ctags="`brew --prefix`/bin/ctags"
 alias hs='http-server -o -c-1'
 
+export VISUAL=vim
+export EDITOR="$VISUAL"
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
 export PATH=$PATH:~/bin
 export PATH="$HOME/.cargo/bin:$PATH"
