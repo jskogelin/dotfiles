@@ -5,7 +5,7 @@ export ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="sunrise"
+ZSH_THEME="hyperzsh"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -97,6 +97,7 @@ alias herokudiff='heroku pipelines:diff -a=wb-bolt-api-staging -r=wb-bolt-api-pr
 alias ag='ag --path-to-ignore ~/.ignore'
 alias ctags="`brew --prefix`/bin/ctags"
 alias hs='http-server -o -c-1'
+alias squash='git rebase -i HEAD~$(git rev-list --count HEAD ^master)'
 
 export VISUAL=vim
 export EDITOR="$VISUAL"
