@@ -24,7 +24,6 @@ Plug 'kshenoy/vim-signature'
 Plug 'easymotion/vim-easymotion'
 Plug 'wellle/targets.vim'
 Plug 'rakr/vim-togglebg'
-Plug 'blueyed/vim-diminactive'
 
 " git stuff
 Plug 'tpope/vim-fugitive'
@@ -50,6 +49,7 @@ Plug 'rafi/awesome-vim-colorschemes'
 Plug 'flazz/vim-colorschemes'
 Plug 'drewtempelmeyer/palenight.vim'
 Plug 'chriskempson/base16-vim'
+Plug 'atelierbram/Base2Tone-vim'
 
 call plug#end()
 
@@ -68,9 +68,9 @@ endif
 " color scheme setup
 syntax on
 set t_Co=256
-colorscheme palenight
+colorscheme Base2Tone_EveningDark
+set background=dark
 
-" Italics for my favorite color scheme
 let g:palenight_terminal_italics=1
 
 " settings
@@ -79,7 +79,7 @@ set autoindent
 set smartindent
 set cindent
 set number
-set wrap
+set nowrap
 set linebreak
 " set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:·
 " set list
@@ -111,6 +111,23 @@ autocmd InsertLeave * set nocul
 " set laststatus=2
 " let g:airline_powerline_fonts = 1
 
+function! GitBranch()
+  return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
+endfunction
+
+function! StatuslineGit()
+  let l:branchname = GitBranch()
+  return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
+endfunction
+
+set statusline=
+set statusline+=%1*\ <<
+set statusline+=%1*\ %{StatuslineGit()}
+set statusline+=%1*\ >>
+set statusline+=\ %F
+
+hi User1 guifg=#000000 guibg=#faf8f5
+
 " lightline
 " let g:lightline = {
       " \ 'colorscheme': 'one',
@@ -133,6 +150,12 @@ let g:deoplete#enable_at_startup = 1
 " ctrlp ignore stuff
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
 
+" indent
+" let g:indentLine_char = ''
+" let g:indentLine_first_char = ''
+" let g:indentLine_showFirstIndentLevel = 1
+" let g:indentLine_setColors = 0
+
 " map leader to spacebar, \ is a pain to reach...
 nnoremap <SPACE> <Nop>
 let mapleader="\<Space>"
@@ -147,6 +170,8 @@ imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
 noremap 0 ^
 vnoremap <C-c> "+y
 
+nnoremap Q :q<CR>
+
 " expand region
 map K <Plug>(expand_region_expand)
 map J <Plug>(expand_region_shrink)
@@ -159,12 +184,24 @@ nnoremap <esc>^[ <esc>^[
 map <C-k><C-b> :NERDTreeToggle<CR>
 map <Leader>ff :NERDTreeFind<CR>
 
+nnoremap = <C-w>=
+
 " Indentation stuff
 nnoremap <Tab> >>_
 nnoremap <S-Tab> <<_
 inoremap <S-Tab> <C-D>
 vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
+
+" fzf
+let $FZF_DEFAULT_COMMAND = 'ag -g ""'
+map <C-p> :Files<CR>
+map E :Files<CR>
+map e :Buffers<CR>
+map <C-f> :Ag 
+
+" search
+vnoremap <C-f> y :Ag <C-r>0<CR>
 
 " tig
 nnoremap <leader>ts :Tig<CR>
@@ -197,13 +234,6 @@ let g:NERDCommentEmptyLines = 1
 
 " delimitmate
 let delimitMate_expand_cr = 1
-
-" fzf
-let $FZF_DEFAULT_COMMAND = 'ag -g ""'
-map <C-p> :Files<CR>
-map E :Files<CR>
-map e :Buffers<CR>
-map <C-f> :Ag 
 
 command! -bang -nargs=* Ag
   \ call fzf#vim#ag(<q-args>,
