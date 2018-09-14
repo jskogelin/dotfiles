@@ -5,10 +5,8 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-" Plug 'itchyny/lightline.vim'
 Plug 'raimondi/delimitmate'
 Plug 'kana/vim-textobj-user'
-Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
 Plug 'mattn/emmet-vim'
 Plug 'ap/vim-css-color'
@@ -49,7 +47,7 @@ Plug 'rafi/awesome-vim-colorschemes'
 Plug 'flazz/vim-colorschemes'
 Plug 'drewtempelmeyer/palenight.vim'
 Plug 'chriskempson/base16-vim'
-Plug 'atelierbram/Base2Tone-vim'
+Plug 'tomasiser/vim-code-dark'
 
 call plug#end()
 
@@ -68,7 +66,7 @@ endif
 " color scheme setup
 syntax on
 set t_Co=256
-colorscheme Base2Tone_EveningDark
+colorscheme codedark
 set background=dark
 
 let g:palenight_terminal_italics=1
@@ -111,23 +109,23 @@ autocmd InsertLeave * set nocul
 " set laststatus=2
 " let g:airline_powerline_fonts = 1
 
-function! GitBranch()
-  return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
-endfunction
-
-function! StatuslineGit()
-  let l:branchname = GitBranch()
-  return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
-endfunction
-
-set statusline=
-set statusline+=%1*\ <<
-set statusline+=%1*\ %{StatuslineGit()}
-set statusline+=%1*\ >>
-set statusline+=\ %F
-
-hi User1 guifg=#000000 guibg=#faf8f5
-
+" function! GitBranch()
+  " return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
+" endfunction
+" 
+" function! StatuslineGit()
+  " let l:branchname = GitBranch()
+  " return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
+" endfunction
+" 
+" set statusline=
+" set statusline+=%1*\ <<
+" set statusline+=%1*\ %{StatuslineGit()}
+" set statusline+=%1*\ >>
+" set statusline+=\ %F
+" 
+" hi User1 guifg=#000000 guibg=#faf8f5
+" 
 " lightline
 " let g:lightline = {
       " \ 'colorscheme': 'one',
@@ -142,7 +140,7 @@ hi User1 guifg=#000000 guibg=#faf8f5
       " \ }
 
 " NerdTree setup
-let g:NERDTreeWinPos = "right"
+" let g:NERDTreeWinPos = "right"
 
 " Deoplete
 let g:deoplete#enable_at_startup = 1
