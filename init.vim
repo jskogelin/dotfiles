@@ -48,6 +48,7 @@ Plug 'flazz/vim-colorschemes'
 Plug 'drewtempelmeyer/palenight.vim'
 Plug 'chriskempson/base16-vim'
 Plug 'tomasiser/vim-code-dark'
+Plug 'hhsnopek/vim-firewatch'
 
 call plug#end()
 
@@ -66,7 +67,7 @@ endif
 " color scheme setup
 syntax on
 set t_Co=256
-colorscheme codedark
+colorscheme gruvbox
 set background=dark
 
 let g:palenight_terminal_italics=1
@@ -88,7 +89,7 @@ set showmatch
 set relativenumber
 set incsearch           " search as characters are entered
 set hlsearch            " highlight matches
-set shell=/bin/bash
+set shell=zsh
 set noswapfile
 " dont change cursor in insert mode - thank god
 set guicursor=

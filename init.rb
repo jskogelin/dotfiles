@@ -23,8 +23,8 @@ end
 files = [
   Dotfile.new(".zshrc", "source"),
   Dotfile.new(".tmux.conf", "source-file"),
-  Dotfile.new("init.vim", "so", ".config/nvim/")
-
+  Dotfile.new("init.vim", "so", ".config/nvim/"),
+  Dotfile.new(".zshenv", "source")
 ]
 
 for file in files
