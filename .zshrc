@@ -81,23 +81,7 @@ export OPEN_APPLY_COUNT=15
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-alias lg='l |grep'
-alias serve='http-server'
-alias milou-f='echo git@bitbucket.org:workbuster/milou-frontend.git'
-alias milou-b='echo git@bitbucket.org:workbuster/milou-backend.git'
-alias t='tig'
-alias ts='tig status'
-alias mstart='mysql.server start'
-alias c='clear'
-alias vim='nvim'
-alias vimrc='nvim ~/.config/nvim/init.vim'
-alias tmuxrc='nvim ~/.tmux.conf'
-alias zshrc='nvim ~/.zshrc'
-alias herokudiff='heroku pipelines:diff -a=wb-bolt-api-staging -r=wb-bolt-api-production && heroku pipelines:diff -a=wb-bolt-client-staging -r=wb-bolt-client-production'
-alias ag='ag --path-to-ignore ~/.ignore'
-alias ctags="`brew --prefix`/bin/ctags"
-alias hs='http-server -o -c-1'
-alias squash='git rebase -i HEAD~$(git rev-list --count HEAD ^master)'
+source ./aliases.sh
 
 export VISUAL=vim
 export EDITOR="$VISUAL"
