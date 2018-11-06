@@ -81,7 +81,7 @@ export OPEN_APPLY_COUNT=15
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-source aliases.sh
+source $(dirname $0)/aliases.sh
 
 export VISUAL=vim
 export EDITOR="$VISUAL"
