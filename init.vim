@@ -22,10 +22,11 @@ Plug 'kshenoy/vim-signature'
 Plug 'easymotion/vim-easymotion'
 Plug 'wellle/targets.vim'
 Plug 'rakr/vim-togglebg'
+Plug 'Yggdroot/indentLine'
+Plug 'vim-airline/vim-airline'
 
 " git stuff
 Plug 'tpope/vim-fugitive'
-Plug 'junegunn/gv.vim'
 Plug 'airblade/vim-gitgutter'
 
 " syntax stuff
@@ -35,7 +36,6 @@ Plug 'lepture/vim-jinja'
 Plug 'thinca/vim-textobj-function-javascript'
 Plug 'kana/vim-textobj-function'
 Plug 'leafgarland/typescript-vim'
-Plug 'jceb/vim-orgmode'
 Plug 'tpope/vim-speeddating'
 Plug 'posva/vim-vue'
 Plug 'nikvdp/ejs-syntax'
@@ -43,12 +43,7 @@ Plug 'w0rp/ale'
 Plug 'rust-lang/rust.vim'
 
 " color schemes
-Plug 'rafi/awesome-vim-colorschemes'
-Plug 'flazz/vim-colorschemes'
-Plug 'drewtempelmeyer/palenight.vim'
-Plug 'chriskempson/base16-vim'
-Plug 'tomasiser/vim-code-dark'
-Plug 'hhsnopek/vim-firewatch'
+Plug 'arcticicestudio/nord-vim'
 
 call plug#end()
 
@@ -67,10 +62,9 @@ endif
 " color scheme setup
 syntax on
 set t_Co=256
-colorscheme gruvbox
-set background=dark
+colorscheme nord
 
-let g:palenight_terminal_italics=1
+let g:nord_underline = 1
 
 " settings
 filetype plugin indent on
@@ -216,8 +210,8 @@ nnoremap <leader>fb :Gblame<CR>
 nnoremap <leader>fo :Git checkout 
 
 " themes
-nnoremap <leader>bl :set background=light<CR> :colorscheme one<CR>
-nnoremap <leader>bd :set background=dark<CR> :colorscheme palenight<CR>
+nnoremap <leader>bl :colorscheme onehalflight<CR>
+nnoremap <leader>bd :colorscheme onehalfdark<CR>
 
 " move lines
 vnoremap <C-j> :m '>+1<CR>gv=gv
@@ -230,6 +224,8 @@ nnoremap H <C-W><C-H>
 " NERDcommenter
 let g:NERDSpaceDelims = 1
 let g:NERDCommentEmptyLines = 1
+
+let g:vue_disable_pre_processors=1
 
 " delimitmate
 let delimitMate_expand_cr = 1
