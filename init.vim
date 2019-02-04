@@ -1,7 +1,7 @@
 call plug#begin('~/.local/share/nvim/plugged')
  
 " plugins
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -11,19 +11,11 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'mattn/emmet-vim'
 Plug 'ap/vim-css-color'
 Plug 'othree/javascript-libraries-syntax.vim'
-Plug 'terryma/vim-expand-region'
 Plug 'tpope/vim-dispatch'
-Plug 'codeindulgence/vim-tig'
-Plug 'junegunn/goyo.vim'
+Plug 'iberianpig/tig-explorer.vim'
 Plug 'AndrewRadev/splitjoin.vim'
-Plug 'craigemery/vim-autotag'
 Plug 'vim-scripts/ReplaceWithRegister'
-Plug 'kshenoy/vim-signature'
-Plug 'easymotion/vim-easymotion'
 Plug 'wellle/targets.vim'
-Plug 'rakr/vim-togglebg'
-Plug 'Yggdroot/indentLine'
-Plug 'vim-airline/vim-airline'
 
 " git stuff
 Plug 'tpope/vim-fugitive'
@@ -35,7 +27,6 @@ Plug 'mxw/vim-jsx'
 Plug 'lepture/vim-jinja'
 Plug 'thinca/vim-textobj-function-javascript'
 Plug 'kana/vim-textobj-function'
-Plug 'leafgarland/typescript-vim'
 Plug 'tpope/vim-speeddating'
 Plug 'posva/vim-vue'
 Plug 'nikvdp/ejs-syntax'
@@ -43,7 +34,14 @@ Plug 'w0rp/ale'
 Plug 'rust-lang/rust.vim'
 
 " color schemes
-Plug 'arcticicestudio/nord-vim'
+Plug 'jacoborus/tender.vim'
+Plug 'drewtempelmeyer/palenight.vim'
+Plug 'morhetz/gruvbox'
+Plug 'rainglow/vim'
+Plug 'AlessandroYorba/Sierra'
+Plug 'agude/vim-eldar'
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'chriskempson/base16-vim'
 
 call plug#end()
 
@@ -62,9 +60,7 @@ endif
 " color scheme setup
 syntax on
 set t_Co=256
-colorscheme nord
-
-let g:nord_underline = 1
+colorscheme base16-default-dark
 
 " settings
 filetype plugin indent on
@@ -80,13 +76,12 @@ set tabstop=2
 set shiftwidth=2
 set expandtab
 set showmatch
-set relativenumber
+set guicursor=
 set incsearch           " search as characters are entered
 set hlsearch            " highlight matches
 set shell=zsh
 set noswapfile
 " dont change cursor in insert mode - thank god
-set guicursor=
 language en_US
 
 " Open new split panes to right and bottom, which feels more natural than Vim’s default
@@ -99,6 +94,8 @@ let g:ack_use_dispatch = 1
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 0
 autocmd InsertEnter * set cul
 autocmd InsertLeave * set nocul
+
+hi StatusLine ctermbg=blue ctermfg=white
 
 " airline setup
 " set laststatus=2
@@ -164,6 +161,7 @@ noremap 0 ^
 vnoremap <C-c> "+y
 
 nnoremap Q :q<CR>
+nnoremap ; :
 
 " expand region
 map K <Plug>(expand_region_expand)
@@ -197,8 +195,8 @@ map <C-f> :Ag
 vnoremap <C-f> y :Ag <C-r>0<CR>
 
 " tig
-nnoremap <leader>ts :Tig<CR>
-nnoremap <leader>tl :Tig!<CR>
+nnoremap <leader>ts :TigOpenProjectRootDir<CR>
+nnoremap <leader>tl :TigOpenCurrentFile<CR>
 
 " source config
 nnoremap <leader>r :source ~/.config/nvim/init.vim<CR>
