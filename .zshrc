@@ -5,7 +5,7 @@ export ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="hyperzsh"
+ZSH_THEME="michelebologna"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -45,7 +45,7 @@ ZSH_THEME="hyperzsh"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git mercurial sublime git-flow zsh-autosuggestions zsh-syntax-highlighting vi-mode)
+plugins=(git zsh-autosuggestions vi-mode)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -82,6 +82,9 @@ export OPEN_APPLY_COUNT=15
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 source $(dirname $0)/aliases.sh
+
+alias tmux='tmux -u'
+alias py='python3'
 
 export VISUAL=vim
 export EDITOR="$VISUAL"
