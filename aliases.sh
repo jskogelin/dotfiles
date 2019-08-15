@@ -16,3 +16,4 @@ alias ctags="`brew --prefix`/bin/ctags"
 alias hs='http-server -o -c-1'
 alias squash='git rebase -i head~$(git rev-list --count head ^master)'
 alias gitb='git branch | grep \* | cut -d " " -f2'
+alias notes='vim -c "set syntax=markdown"'
