@@ -16,40 +16,40 @@ Plug 'iberianpig/tig-explorer.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'wellle/targets.vim'
+Plug 'easymotion/vim-easymotion'
 
 " git stuff
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
+" color schemes
+Plug 'drewtempelmeyer/palenight.vim'
+Plug 'chriskempson/base16-vim'
+Plug 'morhetz/gruvbox'
+Plug 'tomasiser/vim-code-dark'
+
 " syntax stuff
 Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
 Plug 'lepture/vim-jinja'
 Plug 'thinca/vim-textobj-function-javascript'
 Plug 'kana/vim-textobj-function'
 Plug 'tpope/vim-speeddating'
-Plug 'posva/vim-vue'
 Plug 'nikvdp/ejs-syntax'
 Plug 'w0rp/ale'
 Plug 'rust-lang/rust.vim'
-
-" color schemes
-Plug 'jacoborus/tender.vim'
-Plug 'drewtempelmeyer/palenight.vim'
-Plug 'morhetz/gruvbox'
-Plug 'rainglow/vim'
-Plug 'AlessandroYorba/Sierra'
-Plug 'agude/vim-eldar'
-Plug 'NLKNguyen/papercolor-theme'
-Plug 'chriskempson/base16-vim'
+Plug 'othree/html5.vim'
+Plug 'posva/vim-vue'
 
 call plug#end()
 
+"Credit joshdick
+"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
+"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
 if (has("nvim"))
   "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 endif
-
 "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
 "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
 " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
@@ -60,7 +60,10 @@ endif
 " color scheme setup
 syntax on
 set t_Co=256
-colorscheme base16-default-dark
+set background=dark
+colorscheme codedark
+
+let g:gruvbox_contrast_dark = 'hard'
 
 " settings
 filetype plugin indent on
@@ -71,7 +74,7 @@ set number
 set nowrap
 set linebreak
 " set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:·
-" set list
+set list
 set tabstop=2
 set shiftwidth=2
 set expandtab
@@ -81,6 +84,7 @@ set incsearch           " search as characters are entered
 set hlsearch            " highlight matches
 set shell=zsh
 set noswapfile
+set colorcolumn=90
 " dont change cursor in insert mode - thank god
 language en_US
 
@@ -96,6 +100,9 @@ autocmd InsertEnter * set cul
 autocmd InsertLeave * set nocul
 
 hi StatusLine ctermbg=blue ctermfg=white
+
+" autocmd BufRead,BufNewFile *.vue setfiletype html
+autocmd FileType vue syntax sync fromstart
 
 " airline setup
 " set laststatus=2
@@ -120,7 +127,7 @@ hi StatusLine ctermbg=blue ctermfg=white
 " 
 " lightline
 " let g:lightline = {
-      " \ 'colorscheme': 'one',
+      " \ 'colorscheme': 'nord',
       " \ 'active': {
       " \   'left': [ [ 'mode', 'paste' ],
       " \             [ 'readonly', 'filename' ] ],
@@ -134,9 +141,6 @@ hi StatusLine ctermbg=blue ctermfg=white
 " NerdTree setup
 " let g:NERDTreeWinPos = "right"
 
-" Deoplete
-let g:deoplete#enable_at_startup = 1
-
 " ctrlp ignore stuff
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
 
@@ -145,6 +149,9 @@ let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
 " let g:indentLine_first_char = ''
 " let g:indentLine_showFirstIndentLevel = 1
 " let g:indentLine_setColors = 0
+
+" easymotion
+map <Leader>w <Plug>(easymotion-bd-w)
 
 " map leader to spacebar, \ is a pain to reach...
 nnoremap <SPACE> <Nop>
@@ -164,8 +171,6 @@ nnoremap Q :q<CR>
 nnoremap ; :
 
 " expand region
-map K <Plug>(expand_region_expand)
-map J <Plug>(expand_region_shrink)
 
 " Clear highlighting on escape in normal mode
 nnoremap <esc> :noh<return><esc>
@@ -218,6 +223,8 @@ vnoremap <C-k> :m '<-2<CR>gv=gv
 " panes
 nnoremap L <C-W><C-L>
 nnoremap H <C-W><C-H>
+nnoremap K <C-W><C-K>
+nnoremap J <C-W><C-J>
 
 " NERDcommenter
 let g:NERDSpaceDelims = 1
@@ -228,12 +235,11 @@ let g:vue_disable_pre_processors=1
 " delimitmate
 let delimitMate_expand_cr = 1
 
-command! -bang -nargs=* Ag
-  \ call fzf#vim#ag(<q-args>,
-  \                 ' --path-to-ignore ~/.ignore ',
-  \                 <bang>0 ? fzf#vim#with_preview('up:60%')
-  \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \                 <bang>0)
+" command! -bang -nargs=* Ag
+  " \ call fzf#vim#ag(<q-args>,
+  " \                 <bang>0 ? fzf#vim#with_preview('up:60%')
+  " \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
+  " \                 <bang>0)
 
 " tig
 let g:tig_open_command = 'tabedit'
