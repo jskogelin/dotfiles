@@ -27,6 +27,9 @@ Plug 'drewtempelmeyer/palenight.vim'
 Plug 'chriskempson/base16-vim'
 Plug 'morhetz/gruvbox'
 Plug 'tomasiser/vim-code-dark'
+Plug 'dracula/vim'
+Plug 'haishanh/night-owl.vim'
+Plug 'cocopon/iceberg.vim'
 
 " syntax stuff
 Plug 'pangloss/vim-javascript'
@@ -38,7 +41,7 @@ Plug 'nikvdp/ejs-syntax'
 Plug 'w0rp/ale'
 Plug 'rust-lang/rust.vim'
 Plug 'othree/html5.vim'
-Plug 'posva/vim-vue'
+Plug 'leafoftree/vim-vue-plugin'
 
 call plug#end()
 
@@ -61,9 +64,9 @@ endif
 syntax on
 set t_Co=256
 set background=dark
-colorscheme codedark
+colorscheme palenight
 
-let g:gruvbox_contrast_dark = 'hard'
+hi Normal guibg=NONE ctermbg=NONE
 
 " settings
 filetype plugin indent on
@@ -84,7 +87,7 @@ set incsearch           " search as characters are entered
 set hlsearch            " highlight matches
 set shell=zsh
 set noswapfile
-set colorcolumn=90
+set mouse=a
 " dont change cursor in insert mode - thank god
 language en_US
 
