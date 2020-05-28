@@ -11,7 +11,6 @@ alias vimrc='nvim ~/.config/nvim/init.vim'
 alias tmuxrc='nvim ~/.tmux.conf'
 alias zshrc='nvim ~/.zshrc'
 alias herokudiff='heroku pipelines:diff -a=wb-bolt-api-staging -r=wb-bolt-api-production && heroku pipelines:diff -a=wb-bolt-client-staging -r=wb-bolt-client-production'
-alias ag='ag --path-to-ignore ~/.ignore'
 alias ctags="`brew --prefix`/bin/ctags"
 alias hs='http-server -o -c-1'
 alias squash='git rebase -i head~$(git rev-list --count head ^master)'

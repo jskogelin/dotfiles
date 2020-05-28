@@ -2,6 +2,7 @@ call plug#begin('~/.local/share/nvim/plugged')
  
 " plugins
 " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -16,32 +17,19 @@ Plug 'iberianpig/tig-explorer.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'wellle/targets.vim'
-Plug 'easymotion/vim-easymotion'
+Plug 'heavenshell/vim-jsdoc'
 
 " git stuff
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-rhubarb'
 
 " color schemes
 Plug 'drewtempelmeyer/palenight.vim'
-Plug 'chriskempson/base16-vim'
-Plug 'morhetz/gruvbox'
-Plug 'tomasiser/vim-code-dark'
-Plug 'dracula/vim'
-Plug 'haishanh/night-owl.vim'
-Plug 'cocopon/iceberg.vim'
+Plug 'rafi/awesome-vim-colorschemes'
 
 " syntax stuff
-Plug 'pangloss/vim-javascript'
-Plug 'lepture/vim-jinja'
-Plug 'thinca/vim-textobj-function-javascript'
-Plug 'kana/vim-textobj-function'
-Plug 'tpope/vim-speeddating'
-Plug 'nikvdp/ejs-syntax'
-Plug 'w0rp/ale'
-Plug 'rust-lang/rust.vim'
-Plug 'othree/html5.vim'
-Plug 'leafoftree/vim-vue-plugin'
+Plug 'sheerun/vim-polyglot'
 
 call plug#end()
 
@@ -60,20 +48,47 @@ if (has("termguicolors"))
   set termguicolors
 endif
 
+let g:palenight_terminal_italics=1
+let g:gruvbox_italicize_comments=1
+let g:gruvbox_sign_column='bg0'
+
 " color scheme setup
 syntax on
 set t_Co=256
 set background=dark
-colorscheme palenight
+colo gruvbox
 
 hi Normal guibg=NONE ctermbg=NONE
+
+" Color scheme custom stuff
+" highlight Function gui=bold
+" highlight jsThis gui=bold
+highlight String gui=italic
+highlight Comment gui=italic
+
+" coc.nvim config
+set hidden
+set updatetime=150
+set signcolumn=yes
+set nobackup
+set nowritebackup
+" highlight symbol under cursor on CursorHold
+" this plays well with the updatetime setting
+autocmd CursorHold * silent call CocActionAsync('highlight')
+let g:coc_global_extensions = [
+  \ 'coc-tsserver',
+  \ 'coc-json', 
+  \ 'coc-vetur', 
+  \ 'coc-eslint', 
+  \ 'coc-css', 
+  \ 'coc-html', 
+  \ ]
 
 " settings
 filetype plugin indent on
 set autoindent
 set smartindent
 set cindent
-set number
 set nowrap
 set linebreak
 " set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:·
@@ -88,73 +103,54 @@ set hlsearch            " highlight matches
 set shell=zsh
 set noswapfile
 set mouse=a
-" dont change cursor in insert mode - thank god
+set number relativenumber
+set undofile
+set cursorline
 language en_US
 
 " Open new split panes to right and bottom, which feels more natural than Vim’s default
 set splitbelow
 set splitright
 
-" Hopefully fixes ack going bananas sometimes
-let g:ack_use_dispatch = 1
-
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 0
-autocmd InsertEnter * set cul
-autocmd InsertLeave * set nocul
-
-hi StatusLine ctermbg=blue ctermfg=white
-
-" autocmd BufRead,BufNewFile *.vue setfiletype html
+" vue stuff
 autocmd FileType vue syntax sync fromstart
 
-" airline setup
-" set laststatus=2
-" let g:airline_powerline_fonts = 1
+" coc.nvim keybinds
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gvd :vsp<CR><Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gR <Plug>(coc-references)
+nmap <leader>n <Plug>(coc-rename)
+nmap <space>e :CocCommand explorer<CR>
+" Find symbol of current document.
+nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols.
+nnoremap <silent> <space>p  :<C-u>CocList -I symbols<cr>
+" Use K to show documentation in preview window
+nnoremap <C-k> :call <SID>show_documentation()<CR>
 
-" function! GitBranch()
-  " return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
-" endfunction
-" 
-" function! StatuslineGit()
-  " let l:branchname = GitBranch()
-  " return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
-" endfunction
-" 
-" set statusline=
-" set statusline+=%1*\ <<
-" set statusline+=%1*\ %{StatuslineGit()}
-" set statusline+=%1*\ >>
-" set statusline+=\ %F
-" 
-" hi User1 guifg=#000000 guibg=#faf8f5
-" 
-" lightline
-" let g:lightline = {
-      " \ 'colorscheme': 'nord',
-      " \ 'active': {
-      " \   'left': [ [ 'mode', 'paste' ],
-      " \             [ 'readonly', 'filename' ] ],
-      " \  'right': [ [ 'modified', 'gitbranch' ] ]
-      " \ },
-      " \ 'component_function': {
-      " \   'gitbranch': 'fugitive#head'
-      " \ },
-      " \ }
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
 
-" NerdTree setup
-" let g:NERDTreeWinPos = "right"
-
-" ctrlp ignore stuff
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
-
-" indent
-" let g:indentLine_char = ''
-" let g:indentLine_first_char = ''
-" let g:indentLine_showFirstIndentLevel = 1
-" let g:indentLine_setColors = 0
-
-" easymotion
-map <Leader>w <Plug>(easymotion-bd-w)
+"Status-line
+set statusline=
+set statusline+=\ %{FugitiveHead()}
+set statusline+=\ %#IncSearch#
+set statusline+=\ %y
+set statusline+=\ %r
+set statusline+=%#CursorLineNr#
+set statusline+=\ %f
+set statusline+=\ %m
+set statusline+=%= "Right side settings
+set statusline+=%#Search#
+set statusline+=\ %l/%L
+set statusline+=\ [%c]
 
 " map leader to spacebar, \ is a pain to reach...
 nnoremap <SPACE> <Nop>
@@ -162,6 +158,9 @@ let mapleader="\<Space>"
 
 " map save
 nnoremap <Leader>s :wa<CR>
+
+nnoremap <Leader>H  :<C-u>Hist<cr>
+nnoremap <Leader>F  :<C-u>Files<cr>
 
 " emmet
 imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
@@ -177,47 +176,38 @@ nnoremap ; :
 
 " Clear highlighting on escape in normal mode
 nnoremap <esc> :noh<return><esc>
-nnoremap <esc>^[ <esc>^[
 
-" Open NerdTree
-map <C-k><C-b> :NERDTreeToggle<CR>
-map <Leader>ff :NERDTreeFind<CR>
-
+" Balance split sizes
 nnoremap = <C-w>=
 
 " Indentation stuff
+nnoremap <C-p> <C-i>
 nnoremap <Tab> >>_
 nnoremap <S-Tab> <<_
 inoremap <S-Tab> <C-D>
 vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
 
-" fzf
-let $FZF_DEFAULT_COMMAND = 'ag -g ""'
-map <C-p> :Files<CR>
-map E :Files<CR>
+" fzf keybinds
+map E :GFiles<CR>
 map e :Buffers<CR>
 map <C-f> :Ag 
 
 " search
-vnoremap <C-f> y :Ag <C-r>0<CR>
+vnoremap <leader>F yiw :Ag <C-r>0<CR>
 
 " tig
 nnoremap <leader>ts :TigOpenProjectRootDir<CR>
 nnoremap <leader>tl :TigOpenCurrentFile<CR>
 
 " source config
-nnoremap <leader>r :source ~/.config/nvim/init.vim<CR>
+nnoremap <leader>R :source ~/.config/nvim/init.vim<CR>
 
 " fugitive
 nnoremap <leader>fc :Gcommit<CR>
 nnoremap <leader>fd :Gdiff<CR>
 nnoremap <leader>fb :Gblame<CR>
 nnoremap <leader>fo :Git checkout 
-
-" themes
-nnoremap <leader>bl :colorscheme onehalflight<CR>
-nnoremap <leader>bd :colorscheme onehalfdark<CR>
 
 " move lines
 vnoremap <C-j> :m '>+1<CR>gv=gv
@@ -233,16 +223,9 @@ nnoremap J <C-W><C-J>
 let g:NERDSpaceDelims = 1
 let g:NERDCommentEmptyLines = 1
 
+let g:delimitMate_expand_cr = 1
+
 let g:vue_disable_pre_processors=1
-
-" delimitmate
-let delimitMate_expand_cr = 1
-
-" command! -bang -nargs=* Ag
-  " \ call fzf#vim#ag(<q-args>,
-  " \                 <bang>0 ? fzf#vim#with_preview('up:60%')
-  " \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
-  " \                 <bang>0)
 
 " tig
 let g:tig_open_command = 'tabedit'
