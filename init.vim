@@ -18,6 +18,8 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'wellle/targets.vim'
 Plug 'heavenshell/vim-jsdoc'
+Plug 'rhysd/git-messenger.vim'
+Plug 'mhinz/vim-startify'
 
 " git stuff
 Plug 'tpope/vim-fugitive'
@@ -27,6 +29,8 @@ Plug 'tpope/vim-rhubarb'
 " color schemes
 Plug 'drewtempelmeyer/palenight.vim'
 Plug 'rafi/awesome-vim-colorschemes'
+Plug 'sainnhe/gruvbox-material'
+Plug 'embark-theme/vim', { 'as': 'embark' }
 
 " syntax stuff
 Plug 'sheerun/vim-polyglot'
@@ -51,12 +55,13 @@ endif
 let g:palenight_terminal_italics=1
 let g:gruvbox_italicize_comments=1
 let g:gruvbox_sign_column='bg0'
+let g:gruvbox_material_background = 'hard'
 
 " color scheme setup
 syntax on
 set t_Co=256
 set background=dark
-colo gruvbox
+colo embark
 
 hi Normal guibg=NONE ctermbg=NONE
 
@@ -65,6 +70,9 @@ hi Normal guibg=NONE ctermbg=NONE
 " highlight jsThis gui=bold
 highlight String gui=italic
 highlight Comment gui=italic
+
+let g:fzf_preview_window = ['right:30%']
+let g:fzf_layout = { 'window': { 'width': 1, 'height': 0.4, 'yoffset': 1, 'border': 'horizontal' } }
 
 " coc.nvim config
 set hidden
@@ -97,7 +105,6 @@ set tabstop=2
 set shiftwidth=2
 set expandtab
 set showmatch
-set guicursor=
 set incsearch           " search as characters are entered
 set hlsearch            " highlight matches
 set shell=zsh
@@ -106,6 +113,7 @@ set mouse=a
 set number relativenumber
 set undofile
 set cursorline
+set diffopt+=vertical
 language en_US
 
 " Open new split panes to right and bottom, which feels more natural than Vim’s default
@@ -114,6 +122,7 @@ set splitright
 
 " vue stuff
 autocmd FileType vue syntax sync fromstart
+autocmd BufReadPost,BufNewFile *.vue setlocal filetype=vue
 
 " coc.nvim keybinds
 nmap <silent> gd <Plug>(coc-definition)
@@ -121,7 +130,7 @@ nmap <silent> gvd :vsp<CR><Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gR <Plug>(coc-references)
-nmap <leader>n <Plug>(coc-rename)
+nmap <silent> gn <Plug>(coc-rename)
 nmap <space>e :CocCommand explorer<CR>
 " Find symbol of current document.
 nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
@@ -137,6 +146,8 @@ function! s:show_documentation()
     call CocAction('doHover')
   endif
 endfunction
+
+nmap <silent> gb <Plug>(git-messenger)
 
 "Status-line
 set statusline=
@@ -190,6 +201,7 @@ vnoremap <S-Tab> <gv
 
 " fzf keybinds
 map E :GFiles<CR>
+map S :GFiles?<CR>
 map e :Buffers<CR>
 map <C-f> :Ag 
 
