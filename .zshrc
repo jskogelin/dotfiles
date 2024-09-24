@@ -1,3 +1,15 @@
+ZVM_CURSOR_STYLE_ENABLED=false
+
+source ~/antigen.zsh
+antigen use oh-my-zsh
+
+antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle jeffreytse/zsh-vi-mode
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle davidde/git
+
+antigen apply
+
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
@@ -5,7 +17,7 @@ export ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="elessar"
+ZSH_THEME="flazz"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -45,13 +57,15 @@ ZSH_THEME="elessar"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git vi-mode zsh-syntax-highlighting)
+# plugins=(vi-mode zsh-syntax-highlighting)
+plugins=(heroku)
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
 export PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"
+export PATH=$PATH:/opt/homebrew/bin
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -83,7 +97,7 @@ source $(dirname $0)/aliases.sh
 alias tmux='tmux -u'
 alias py='python3'
 
-export TERM=xterm-256color tmux
+export TERM=xterm-256color
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
@@ -92,30 +106,27 @@ export PATH="$HOME/.cargo/bin:$PATH"
 
 # nvm stuff
 [ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"
-export PATH="$NVM_DIR/versions/node/v$(<$NVM_DIR/alias/default)/bin:$PATH"
-export NVM_DIR="/usr/local/opt/nvm"
+# export PATH="$NVM_DIR/versions/node/v$(<$NVM_DIR/alias/default)/bin:$PATH"
+export NVM_DIR="$HOME/.nvm"
 alias nvm="unalias nvm; [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"; nvm $@"
-
-bindkey '^l' autosuggest-accept
 
 # Display directory content after cd
 function cd {
   builtin cd "$@" && l
 }
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # vi mode improvements
-precmd() { RPROMPT="" }
-function zle-line-init zle-keymap-select {
-   VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]%  %{$reset_color%}"
-   RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/} $EPS1"
-   zle reset-prompt
-}
-
-zle -N zle-line-init
-zle -N zle-keymap-select
+# precmd() { RPROMPT="" }
+# function zle-line-init zle-keymap-select {
+   # VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]%  %{$reset_color%}"
+   # RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/} $EPS1"
+   # zle reset-prompt
+# }
+# 
+# zle -N zle-line-init
+# zle -N zle-keymap-select
 
 export KEYTIMEOUT=1
 
@@ -126,3 +137,9 @@ for dump in ~/.zcompdump(N.mh+24); do
 done
 
 compinit -C
+
+function zvm_after_init() {
+  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+}
+
+bindkey '^l' autosuggest-accept
